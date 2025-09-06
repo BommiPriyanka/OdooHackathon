@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoFinds - Shop</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #e8f5e9;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #2e7d32;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img { width: 60px; height: 60px; }
+    .logo h1 { font-size: 1.4rem; }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-links li a:hover { color: #a5d6a7; }
+
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: #e53935;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8rem;
+    }
+
+    /* Products */
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .product-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+    }
+
+    .product-card h3 { color: #2e7d32; margin: 15px 0 10px; }
+    .product-card p { font-size: 1rem; color: #555; }
+
+    .product-card button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .product-card button:hover { background: #1b5e20; }
+
+    /* Cart */
+    .cart {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      width: 300px;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .cart h2 { color: #2e7d32; margin-bottom: 15px; }
+    .cart-items { max-height: 300px; overflow-y: auto; margin-bottom: 10px; }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .cart-item button {
+      background: #e53935;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 2px 6px;
+    }
+
+    .cart-total { font-weight: bold; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="EcoFinds.png" alt="EcoFinds Logo">
+      <h1>EcoFinds</h1>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="signup.html">Sign up</a></li> 
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="purchases.html">Purchases</a></li>
+      <li><a href="#about">About</a></li>
+      <li>
+        <div class="cart-icon" onclick="toggleCart()">
+          Cart 🛒
+          <span class="cart-count" id="cart-count">0</span>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Products Section -->
+  <section class="products" id="products"></section>
+
+  <!-- Cart -->
+  <div class="cart" id="cart" style="display:none;">
+    <h2>Cart</h2>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Total: ₹0</div>
+  </div>
+
+  <script>
+    const products = [
+      { name: 'Eco Bag', price: 350, img: 'https://2.imimg.com/data2/PS/MF/MY-/untitled-1-500x500.jpg' },
+      { name: 'Reusable Bottle', price: 500, img: 'https://cleanwater.org/sites/default/files/2023-07/ReThink%20Disposable-PlasticFreeJuly-NJ.png' },
+      { name: 'Solar Lamp', price: 1200, img: 'https://5.imimg.com/data5/YL/NQ/MY-12813822/solar-lamp.jpg' },
+      { name: 'Bamboo Toothbrush', price: 60, img: 'https://i0.wp.com/kleangreenindia.com/wp-content/uploads/2022/03/Ha-12-1.png?fit=1080%2C1080&ssl=1' },
+      { name: 'Reusable Straw Set', price: 150, img: 'https://rukminim2.flixcart.com/image/704/844/xif0q/glass/i/g/l/reusable-stainless-steel-straw-with-cleaning-brush-metal-straws-original-imahdr3sxztzquxu.jpeg?q=90&crop=false' },
+      { name: 'Compostable Plates', price: 250, img: 'https://5.imimg.com/data5/SELLER/Default/2022/5/GQ/IN/CN/36982435/100-compostable-biodegradable-ecofriendly-plates-tableware-and-cutlery.jpg' },
+      { name: 'Solar Charger', price: 2200, img: 'https://img.freepik.com/free-vector/powerbank-battery-charger-realistic-concept-with-mobile-phone-charging-vector-illustration_1284-81781.jpg' }
+    ];
+
+    let cart = [];
+
+    function renderProducts() {
+      const productsSection = document.getElementById('products');
+      productsSection.innerHTML = '';
+      products.forEach((product, index) => {
+        // Show "Add to Cart" only if not in cart
+        if (!cart.find(item => item.name === product.name)) {
+          const div = document.createElement('div');
+          div.className = 'product-card';
+          div.innerHTML = `
+            <img src="${product.img}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>₹${product.price}</p>
+            <button onclick="addToCart(${index})">Add to Cart</button>
+          `;
+          productsSection.appendChild(div);
+        } else {
+          // If already in cart, show Buy Now button instead
+          const div = document.createElement('div');
+          div.className = 'product-card';
+          div.innerHTML = `
+            <img src="${product.img}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>₹${product.price}</p>
+            <button onclick="buyNow('${product.name}', ${product.price})">Buy Now</button>
+          `;
+          productsSection.appendChild(div);
+        }
+      });
+    }
+
+    function addToCart(index) {
+      cart.push(products[index]);
+      renderCart();
+      renderProducts();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      renderCart();
+      renderProducts();
+    }
+
+    function renderCart() {
+      const cartItems = document.getElementById('cart-items');
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <span>${item.name} - ₹${item.price}</span>
+          <button onclick="removeFromCart(${index})">X</button>
+        `;
+        cartItems.appendChild(div);
+      });
+
+      document.getElementById('cart-total').innerText = `Total: ₹${total}`;
+      document.getElementById('cart-count').innerText = cart.length;
+    }
+
+    function toggleCart() {
+      const cartDiv = document.getElementById('cart');
+      cartDiv.style.display = cartDiv.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function buyNow(name, price) {
+      alert(`Thank you for buying ${name} for ₹${price}!`);
+    }
+
+    // Initial render
+    renderProducts();
+  </script>
+</body>
+</html>
