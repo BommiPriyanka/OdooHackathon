@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoFinds - Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f1f8e9;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #2e7d32;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .logo h1 {
+      font-size: 1.4rem;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .nav-links li a:hover {
+      color: #a5d6a7;
+    }
+
+    /* Dashboard Layout */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #388e3c;
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 10px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      color: #c8e6c9;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      margin-bottom: 15px;
+      color: #2e7d32;
+    }
+
+    .profile-info p {
+      margin: 8px 0;
+    }
+
+    .orders table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .orders th, .orders td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .orders th {
+      background: #e8f5e9;
+    }
+
+    .saved-items {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .saved-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      width: 200px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .saved-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .saved-card h4 {
+      margin: 10px 0;
+      color: #2e7d32;
+    }
+
+    .saved-card p {
+      margin: 5px 0;
+      font-weight: bold;
+      color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="EcoFinds.png" alt="EcoFinds Logo">
+      <h1>EcoFinds</h1>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="logout.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>My Account</h2>
+      <ul>
+        <li><a href="#">👤 Profile</a></li>
+        <li><a href="#">📦 Orders</a></li>
+        <li><a href="#">❤ Saved Items</a></li>
+        <li><a href="#">⚙ Settings</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Profile Info -->
+      <div class="card profile-info">
+        <h3>Profile Information</h3>
+        <p><strong>Name:</strong> Kanishraj</p>
+        <p><strong>Email:</strong> kanishraj@example.com</p>
+        <p><strong>Member Since:</strong> Jan 2025</p>
+      </div>
+
+      <!-- Order History -->
+      <div class="card orders">
+        <h3>Order History</h3>
+        <table>
+          <tr>
+            <th>Order ID</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <td>#1023</td>
+            <td>Used Laptop</td>
+            <td>₹350</td>
+            <td>Delivered</td>
+          </tr>
+          <tr>
+            <td>#1024</td>
+            <td>Wooden Chair</td>
+            <td>₹50</td>
+            <td>Shipped</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Saved Items -->
+      <div class="card">
+        <h3>Saved Items</h3>
+        <div class="saved-items">
+          <div class="saved-card">
+            <img src="https://img.freepik.com/free-photo/still-life-rendering-jackets-display_23-2149745027.jpg" alt="Jacket">
+            <h4>Vintage Jacket</h4>
+            <p>₹25</p>
+          </div>
+          <div class="saved-card">
+            <img src="https://5.imimg.com/data5/YL/NQ/MY-12813822/solar-lamp.jpg" alt="Lamp">
+            <h4>Solar Lamp</h4>
+            <p>₹500</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>
