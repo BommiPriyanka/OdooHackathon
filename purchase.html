@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Purchases</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+      min-height: 100vh;
+      padding: 30px;
+      font-family: "Poppins", sans-serif;
+    }
+    .purchase-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    .purchase-card:hover {
+      transform: translateY(-5px);
+    }
+    .purchase-card img {
+      height: 300px;
+      object-fit: cover;
+      width: 100%;
+    }
+    .purchase-body {
+      padding: 15px;
+    }
+    .purchase-body h5 {
+      font-weight: bold;
+      color: #2e7d32;
+    }
+    .price {
+      color: #1b5e20;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .date {
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="text-center text-success mb-4">🌿 My Purchases</h2>
+  <div class="row" id="purchases-container">
+    <!-- Purchases will be loaded here -->
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+window.addEventListener('DOMContentLoaded', async () => {
+  let userId = localStorage.getItem('userId');
+
+  // fallback for demo
+  if (!userId) {
+    console.warn("No userId found, using demo data...");
+    userId = "demoUser";
+  }
+
+  try {
+    let purchases = [];
+
+    if (userId === "demoUser") {
+      // Mock purchases for demo
+      purchases = [
+        { name: "Eco-friendly Bag", price: 250, date: "2025-09-01", image: "https://2.imimg.com/data2/PS/MF/MY-/untitled-1-500x500.jpg" },
+        { name: "Recycled Notebook", price: 120, date: "2025-08-28", image: "https://seedballs.in/cdn/shop/files/Eco-Friendly-Notebook-Madefrom-100_RecycledPaper_3.jpg?v=1740575137" },
+        { name: "Glass Bottle", price: 300, date: "2025-08-25", image: "https://images.picxy.com/cache/2019/2/7/83660aab53c9ecb425291cf714477d98.jpg" }
+      ];
+    } else {
+      // Fetch from backend if logged in
+      const res = await fetch(http://localhost:5000/api/purchases/${userId});
+      purchases = await res.json();
+    }
+
+    const container = document.getElementById('purchases-container');
+
+    if (!purchases.length) {
+      container.innerHTML = <p class="text-center text-muted">No purchases found.</p>;
+      return;
+    }
+
+    purchases.forEach(item => {
+      const card = document.createElement('div');
+      card.className = "col-md-4 mb-4";
+
+      card.innerHTML = `
+        <div class="purchase-card">
+          <img src="${item.image || 'https://via.placeholder.com/300x180'}" alt="${item.name}">
+          <div class="purchase-body">
+            <h5>${item.name}</h5>
+            <p class="price">₹ ${item.price}</p>
+            <p class="date">Purchased on: ${new Date(item.date).toLocaleDateString()}</p>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error("Error loading purchases:", error);
+    document.getElementById('purchases-container').innerHTML = 
+      <p class="text-center text-danger">Failed to load purchases.</p>;
+  }
+});
+</script>
+
+</body>
+</html>
